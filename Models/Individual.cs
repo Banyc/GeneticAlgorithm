@@ -56,25 +56,10 @@ namespace GeneticAlgorithm.Models
             };
 
             return (child1, child2);
-
-            // if (this.Random.Next(0, 2) == 0)
-            // {
-            //     this.Chromosome = thisLeftSubChromosome.Concat(otherRightSubChromosome).ToList();
-            //     otherIndividual.Chromosome = otherLeftSubChromosome.Concat(thisRightSubChromosome).ToList();
-            // }
-            // else
-            // {
-            //     otherIndividual.Chromosome = thisLeftSubChromosome.Concat(otherRightSubChromosome).ToList();
-            //     this.Chromosome = otherLeftSubChromosome.Concat(thisRightSubChromosome).ToList();
-            // }
         }
 
         public void Mutate()
         {
-            // int mutationIndex = this.Random.Next(0, this.Chromosome.Count);
-            // // this.Chromosome[mutationIndex] = (this.Chromosome[mutationIndex] + 1) % 2;
-            // this.Chromosome[mutationIndex] = (byte)((this.Chromosome[mutationIndex] + 1) % 2);
-
             int listOffset = this.Random.Next(0, this.Chromosome.Count);
             int byteOffset = this.Random.Next(0, 8);
             byte selectedByte = this.Chromosome[listOffset];
