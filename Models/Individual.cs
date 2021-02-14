@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace GeneticAlgorithm.Models
 {
-    public class Individual
+    public class Individual : ICloneable
     {
         public string Name { get; set; }
         public List<byte> Chromosome { get; set; } = new List<byte>();
@@ -22,7 +22,7 @@ namespace GeneticAlgorithm.Models
             }
         }
 
-        public Individual(Func<List<byte>, double> fitnessExpression, int chromosomeSize = 12)
+        public Individual(Func<List<byte>, double> fitnessExpression, int chromosomeSize)
         {
             this.FitnessExpression = fitnessExpression;
             int i;
@@ -65,6 +65,15 @@ namespace GeneticAlgorithm.Models
             byte selectedByte = this.Chromosome[listOffset];
             byte mutatedByte = (byte)(selectedByte ^ ((byte)1 << byteOffset));
             this.Chromosome[listOffset] = mutatedByte;
+        }
+
+        public object Clone()
+        {
+            return new Individual(this.FitnessExpression, this.Chromosome.Count)
+            {
+                Chromosome = new List<byte>(this.Chromosome),
+                Name = this.Name,
+            };
         }
     }
 }

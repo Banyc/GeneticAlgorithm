@@ -10,7 +10,7 @@ namespace GeneticAlgorithm.Models
         public List<Individual> Individuals { get; set; } = new List<Individual>();
         public int Generation { get; set; } = 0;
 
-        public Population(int individualCount, Func<List<byte>, double> fitnessExpression, int chromosomeSize = 12)
+        public Population(int individualCount, Func<List<byte>, double> fitnessExpression, int chromosomeSize)
         {
             int i;
             for (i = 0; i < individualCount; i++)
@@ -38,9 +38,25 @@ namespace GeneticAlgorithm.Models
                 var firstParent = SelectParent(sumFitness);
                 var secondParent = SelectParent(sumFitness);
 
-                (var firstChild, var secondChild) = firstParent.Crossover(secondParent);
-                firstChild.Mutate();
-                secondChild.Mutate();
+                var firstChild = (Individual)firstParent.Clone();
+                var secondChild = (Individual)secondParent.Clone();
+
+                // crossover
+                while (this.Random.NextDouble() < 0.5f)
+                {
+                    (firstChild, secondChild) = firstChild.Crossover(secondChild);
+                }
+                // mutate children
+                while (this.Random.NextDouble() < 0.5f)
+                {
+                    firstChild.Mutate();
+                }
+                while (this.Random.NextDouble() < 0.5f)
+                {
+                    secondChild.Mutate();
+                }
+
+                // save new children
                 children.Add(firstChild);
                 children.Add(secondChild);
             }
