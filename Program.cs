@@ -10,9 +10,15 @@ namespace GeneticAlgorithm
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Genetic Algorithm!");
+            const int generations = 100;
 
-            Population population = new Population(10, FitnessExpression, 16);
+            Population population = new(
+                individualCount: 10,
+                FitnessExpression,
+                chromosomeSize: 16
+            );
+
+            Console.WriteLine("Hello Genetic Algorithm!");
 
             do
             {
@@ -26,14 +32,14 @@ namespace GeneticAlgorithm
 
                 population.NextGeneration();
             }
-            while (population.Generation < 100);
+            while (population.Generation < generations);
         }
 
         // the fitness evaluation logic
         private static double FitnessExpression(List<byte> chromosome)
         {
             // decode: bytes -> int16
-            List<int> listInt16 = new List<int>();
+            List<int> listInt16 = new();
 
             int i;
             for (i = 0; i + 2 <= chromosome.Count; i += 2)
@@ -43,7 +49,7 @@ namespace GeneticAlgorithm
                 listInt16.Add(int16);
             }
 
-            // write down your standard of evaluation
+            // replace it with your evaluation
             int score = listInt16[0];
 
             return score;
